@@ -41,6 +41,7 @@ const App = () => {
    
   useEffect(() => {
     if (seararchTitle !== "") {
+      console.log("reset")
       setGalleryList([]);
       setPage(1);
     }
