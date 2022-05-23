@@ -2,10 +2,10 @@
 import './App.css';
 import {useState, useEffect} from 'react';
 import { Searchbar } from "./component/Searchbar.jsx"
-import { ImageGallery } from "./component/image-gallery"
-import { LoadMore } from "./component/loader-more.jsx"
+import { ImageGallery } from "./component/Image-gallery"
+import { LoadMore } from "./component/Loader-more.jsx"
 import { Loader } from "./component/Loader"
-import { Modal } from "./component/modal"
+import { Modal } from "./component/Modal"
 import {fetchApi} from "../src/fetch-Api"
 
 const state = {
@@ -16,7 +16,7 @@ const state = {
 }
 const App = () => {
   const [seararchTitle, setSeararchTitle] = useState("");
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(null);
   const [galleryList, setGalleryList] = useState([]);
   const [states, setStates] = useState(state.IDLE);
   const [selectedImg, setSelectedImg] = useState(null);
@@ -45,12 +45,12 @@ const App = () => {
       setGalleryList([]);
       setPage(1);
     }
-
-    
   },[seararchTitle])
   
   useEffect(() => {
+    
     if (seararchTitle !== "") {
+      console.log("fetch")
       setStates(state.PENDING);
     fetchApi(seararchTitle, page).then(data => {
       const newArr = galleryList.concat(data);
@@ -67,7 +67,7 @@ const App = () => {
     })}
     
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[seararchTitle,page])
+  },[page])
   
     return <div className='App'><Searchbar seararchTitle={inputSeararchTitle} />
       <ImageGallery galleryList={galleryList} selected={selectedCard}/>
